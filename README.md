@@ -37,7 +37,7 @@ TAGは, tag.bat(mac版ではtag.command)というバッチファイルをダブ�
 
 <img src="image/tag_folder_tag_bat.png" alt="drawing" width="480"/>
 
-すると, tag起動画面, 小さなメニュー出現します.
+すると, tag起動画面, 小さなメニューが出現します.
 
 <img src="image/title.png" alt="drawing" width="200"/>
 
