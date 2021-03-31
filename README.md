@@ -3,9 +3,12 @@
 
 ## 1. 概要
 - windows版 tag_v5.3_win.zip
+  - MS windows10 pro 20H2にて動作確認
+  - 開発は mingw上のgcc/fortranで行い静的実行ファイルを生成
 - Mac版 tag_v5.3_mac.zip (調整中)
+  - 静的実行ファイルを生成できなそうで少し困っている.
 
-詳細は以下の論文にあります
+TAGについての詳細は以下の論文にあります
 
 [Toolbox Accelerating Glycomics (TAG): Glycan Annotation from MALDI-TOF MS Spectra and Mapping Expression Variation to Biosynthetic Pathways,  Biomolecules 2020, 10(10), 1383; https://doi.org/10.3390/biom10101383  ](https://www.mdpi.com/2218-273X/10/10/1383)
 
