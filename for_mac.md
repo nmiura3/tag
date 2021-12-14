@@ -19,6 +19,10 @@ brew install XXXX(アプリ名)
 |gnuplot|5.4.2|
 |gawk|5.1.1|
 
+homebrewのインストールは
+https://brew.sh/index_ja
+
+
 ## 2. CSVの準備
 質量分析装置からmass listを取り出し, これをcsvファイルに変換する必要があります. これはMacの標準ソフトnumbersで行えます. エクセルファイルを読み込んだのちに, ファイル--> 書き出し-->csvとたどって保存してください.
 
