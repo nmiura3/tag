@@ -1,4 +1,4 @@
-# Toolbox Accelerating Glycomics (TAG) version 5.2 manual
+# Toolbox Accelerating Glycomics (TAG) version 5.3 manual
 ## TAG リリース v5.3
 2022.1.10
 
