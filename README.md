@@ -1,16 +1,26 @@
 # Toolbox Accelerating Glycomics (TAG) version 5.2 manual
-## TAG リリース v5.2
+## TAG リリース v5.3
+2022.1.10
 
-## 1. 概要
-- windows版 tag_v5.2_win.zip
+## 1.  変更点
+バージョン5.3では動作自賠が大幅に変更になりました. 5.2のようにCSVファイルを用意してTAGexpressionを走らせる機能も残っています. これは後述します. 以下に変更点, 新機能を記載します.
+
+- MassListのファイルをxlsxファイルで用意し, 別途プレートをイメージしたxlsxファイルに必要情報を記載して, バージョン5.2にあたるCSVのインプットファイルを自動で生成する機能を追加した. これによってこれまで必要としていたxlsxをcsvに変換するアプリが不要になった.
+- 検量線を引く処理(TAG express calburation line)と実際に解析する処理(TAG expression analysis)の２つに実行モードを分けた. 1つのプレートファイルから検量線用のスポットと実測用のスポットの情報を読み取り2つのインプット用のフォルダを作成しそれぞれ必要なcsvファイルを格納します.
+- 検量線を引くモードではeach_glycan_quant_point_rcut.htmlを出力し, 検量線のグラフを示す. フィットする直線の傾き, 切片およびR^2を出力します.
+
+## 2. 概要
+- windows版 tag_v5.3_win.zip
   - MS windows10 pro 20H2にて動作確認
   - 開発は mingw上のgcc/fortranで行い静的実行ファイルを生成
-- Mac版 tag_v5.2_mac.zip (調整中)
-  - 静的実行ファイルを生成できなそうで少し困っている.
+- Mac版 tag_v5.3_M1mac.zip
+  - [for_mac.md](https://github.com/nmiura3/tag/blob/master/for_mac.md)を参照してください.  いくつかアプリケーションをインストールする必要があります.
+
 
 TAGについての詳細は以下の論文にあります
 
 [Toolbox Accelerating Glycomics (TAG): Glycan Annotation from MALDI-TOF MS Spectra and Mapping Expression Variation to Biosynthetic Pathways,  Biomolecules 2020, 10(10), 1383; https://doi.org/10.3390/biom10101383  ](https://www.mdpi.com/2218-273X/10/10/1383)
+TAGを用いて解析を行った場合は上記論文を参照して頂ければ幸いです.
 
 リリースのところからダウンロードしてください. 基本的にフォルダを解凍してできるTAGのフォルダをどこかにおいて, win版であればフォルダ内のtag.batを, mac版であればtag.commandをダブルクリックする事で起動できます.
 
@@ -19,11 +29,7 @@ TAGは以下のソフトを活用して動作しています.
 - [tcl/tk 8.6](https://www.tcl.tk/software/tcltk/8.6.html) GUIとコマンドドライバ
 - [gawk 4.2.1](https://www.gnu.org/software/gawk/) awkスクリプト実行用
 - [gnuplot 5.2](http://www.gnuplot.info/index.html) グラフ描画
-- [cluster 3.0](http://bonsai.hgc.jp/~mdehoon/software/cluster/software.htm#ctv) クラスター解析
-
-
--•	Microsoft Visual Basic 6.0 コモン コントロール 
-のインストールが必要（現在も必要かは不明：要確認windowsの場合）
+#- [cluster 3.0](http://bonsai.hgc.jp/~mdehoon/software/cluster/software.htm#ctv) クラスター解析
 
 TAGは, glycoblotting法などによって得られた質量分析スペクトルデータから糖鎖の発現量を得る, 系列間の平均や検定など主に発現量に関する解析を行うためのTAG_expと, 発現結果を糖鎖の生合成経路に配置, 可視化する事によって糖鎖発現と投薬に対する応答や疾患などの生命現象に対する糖鎖が果たす役割を見出す支援としての一連の可視化・マイニングツールであるTAG_viewからなっています.
 
@@ -31,66 +37,72 @@ TAGは, glycoblotting法などによって得られた質量分析スペクト�
 
 現在のバージョンでは, N-glycanとN型遊離糖鎖の解析を行う事ができます. そのための実行ファイルとマップ, 糖鎖リストを含んでいます. GSLについては現在開発中であり, おまけ程度の出来栄えです.
 
-TAGの実行に必要なプログラム群は, tag_v5.2というフォルダに収められています.これは配布されるtag_v4.zipを展開する事によって得られます.このフォルダにはTAGを動作させるのに必要なツールである（exceltocsv.exe, tcl/tk処理系, gnuplotなどのツールも含んでいます.このフォルダをどこかにコピーして使います.
+TAGの実行に必要なプログラム群は, tag_v5.3_winまたはtag_v5.3_M1macというフォルダに収められています.これは配布されるファイルを展開する事によって得られます.windows版ではtcl/tk処理系, gnuplotなどのツールも含んでいます.このフォルダをどこかにコピーして使います. mac版ではこれら必要なツールはhomebrewを用いてインストールします. homebrewについては好みもあるかと思いますが, できるだけ実行環境をそろえるという意味合いがありますのでご理解ください. ご自分で環境を構築頂いても結構です.
 
 TAGは, tag.bat(mac版ではtag.command)というバッチファイルをダブルクリックすることで起動します.このバッチファイルへのショートカットをデスクトップなどに作っても大丈夫のようです.（ファイル・フォルダ等の配置について, 空白を含むフォルダ名や日本語のフォルダ名は試していません.空白を含まず日本語のフォルダ名を用いていないパスに置くことを推奨します.）
 
-<img src="image/tag_folder_tag_bat.png" alt="drawing" width="480"/>
+<img src="image/tag_folder_tag_bat_5.3.png" alt="drawing" width="480"/>
 
 すると, tag起動画面, 小さなメニューが出現します.
 
-<img src="image/title.png" alt="drawing" width="200"/>
+<img src="image/title_5.3.png" alt="drawing" width="200"/>
 
-上半分はそれぞれの処理を行うためのボタンで, 下半分にはtagが置かれているフォルダやリストファイルなどの情報が出力されます. それぞれボタンを押すことによってそれぞれプログラムが実行され処理が行われます.立ち上げたばかりの時は, tagが置かれているフォルダ以外のデータフォルダやリストファイルは未選択ですので空欄になっています.処理が実行されるとこれらは表示されます.TAG_viewについて, N-glycanとNFGについてはグラフを貼り付けたタイプと, 発現量の増減を示したタイプの2種類が出力されます.GSL(SALSA)の場合は現在棒グラフを貼り付けたタイプのみ動作します.
+上半分はそれぞれの処理を行うためのボタンで, 下半分にはtagが置かれているフォルダやリストファイルなどの情報が出力されます. それぞれボタンを押すことによってそれぞれプログラムが実行され処理が行われます.立ち上げたばかりの時は, tagが置かれているフォルダ以外のデータフォルダやリストファイルは未選択ですので空欄になっています.処理が実行されるとこれらは表示されます.TAG_Pathwayについて, N-glycanとNFGについてはグラフを貼り付けたタイプと, 発現量の増減を示したタイプの2種類が出力されます.GSL(SALSA)の場合は現在棒グラフを貼り付けたタイプのみ動作します. 5.3にバージョンアップするにあたり糖鎖組成のIDを大幅に変更したため現在このTAG_pathwayは動作しません. 対応しだいこの場でお知らせいたします.
 
-## 2. エクセルファイルの準備
+## 3. プレート情報ファイルの準備
 
-masslistを用意したら, すべてのタブの2行目に内部標準の量やtoleranceなど各種条件を入力します. 各セルに入力する量は以下の通りです.
+本バージョンでは, 血清の大量の解析に対応すべくMALDIの384スポットのそれぞれにどのような測定が対応するかをエクセルファイルに記述することでインプットを自動で作成する機能をもっています.
 
+masslistを用意したら, すべてのタブの2行目に内部標準の量やtoleranceなど各種条件を入力します. 各セルに入力する量は以下の通りです.  従来版で入力していたD2, E2に対応する情報を入力するデータをプレート情報から得ます.
 
 | cell | data and description |
 | :---- | :----- |
-| A2 | 内部標準の量(ug) |
-| B2 | tolerance (default 2) |
-| C2 | タンパク量(ug)この数値を基にタンパク質100ugあたりの糖鎖量に変換される.血清などの場合でタンパクが無い場合は100を入れておけば数値の変更が無い |
-| D2 |何番目の系列に属するかを整数で指定 |
-| E2 |系列のショーネーム |
+| A1 | 内部標準の量(ug) |
+| B1 | tolerance (default 2) |
+| C1 | タンパク量(ug)この数値を基にタンパク質100ugあたりの糖鎖量に変換される.血清などの場合でタンパクが無い場合は100を入れておけば数値の変更が無い |
 <br>
   
-<img src="image/input_to_mass_list.png" alt="center" width="480"/>
+<img src="image/plate_information.png" alt="center" width="480"/>
 
-## 3.エクセルからCSVへコンバート
+上図はプレート情報を入力するエクセルファイルの例になります. 検量線を引く際に用いるスポットについては何番目の実験に対応するかの整数と乗せた量をアンダースコア'_'で区切って入力します. 解析に用いる場合は実験の番号とラベルをシャープ'#'で区切って入力します.
+タンパク量などをスポットごとに変えたい場合はcsvを作成したのちに, そちらを編集してください.
 
-TAG_expでは, 質量分析の結果についてcsv(コンマ区切り)ファイルでの入力を前提にしています.この入力を作成するために, 多くのシートを含むエクセルファイルを複数のcsvに変換します.この変換には, exceltoCSVを用いています(windows版).
+## 4.エクセルからCSVへコンバート
 
-<img src="image/exceltocsv_window.png" alt="center" width="200"/>
+TAG_expでは, 質量分析の結果についてcsv(コンマ区切り)ファイルでの入力を前提にしています.この入力を作成するために, MassListとプレート情報ファイルplate1.xlsxを用意して下図一番上のボタン（赤枠）をクリックして変換を行います. クリ九すると最初にplateファイルを選択するセレクター, 次にMassListを選択するセレクターが出ますのでそれぞれファイルを選択して開くをクリックして進めてください下さい. 
 
-ウィンドウの上部にエクセルファイルをドロップすればCSVに分割できます. 下では出力先も指定できますので, 適宜指定すると良いと思います. できたCSVファイルを1つのディレクトリに納めます. GSLの解析は酵素なしの実験との差を取ります. この場合はそれぞれ用意したmasslistから別々にCSVを作成し, それぞれ独立にディレクトリに納めてください.
+<img src="image/select_masslist.png" alt="center" width="200"/>
+<img src="image/select_plate.png" alt="center" width="200"/>
 
-## 4.TAG expressionの実行
+
+
+MassListファイルがあるフォルダにMassListファイル名から'.xlsx'を除いた名前のフォルダを作成し, さらに検量線用のcsvファイルはその中のcalibration_lineというフォルダに, 解析用のcsvファイルはanalysisという名前のフォルダに出力されます. これらをTAG expressionの解析に用いることになります.
+
+MassFileのタブの名前に対して'_0_'と'_1'で囲まれた文字列をプレート情報として取得していますのでBruker以外の質量分析機器の場合はご相談ください. スクリプト変更で対応させて頂きます.
+
+## 5.TAG expressionの実行
 TAGのタイトル画面
 
-<img src="image/tag_overviewJ.png" alt="center" width="480"/>
+<img src="image/title_5.3.png" alt="center" width="480"/>
 
-において, 一番上のボタン **runTAG_Expression (absolute expression)** がN-glycanとFNGの解析を行うプログラムを走らせるものです.このボタンを押すと糖鎖リストを入力するための選択画面が出ますのでリストを選択ます. LIstファイルはListを生成するためのawkスクリプトと一緒にlistディレクトリに格納されています. N-glycanであれば **N_list_auto.csv**をFNGであれば **F_list_auto** をお使いください. これらに独自に糖鎖を追加する事も可能です. またスクリプトを変更して異なるリストを生成する事も可能です. リストは糖鎖構造（または名前）とm/zおよび糖鎖タイプをカンマで区切るCSV形式で保存してださい. 
+において, 二番目のボタン **runTAG_Expression (calibration line)** がN-glycanとFNGの検量線を引くプログラムを走らせるもので, 三番ののボタン **runTAG_Expression (analysis)** がN-glycanとFNGの検量線を引くプログラムを走らせるものです.バージョン5.2と同様に, これらのボタンを押すと糖鎖リストを入力するための選択画面が出ますのでリストを選択ます. LIstファイルはListを生成するためのawkスクリプトと一緒にlistディレクトリに格納されています. N-glycanであれば **N_list_auto.csv**をFNGであれば **F_list_auto** をお使いください. 生成した糖鎖リストにに独自に糖鎖を追加する事も可能です. またスクリプトを変更して異なるリストを生成する事も可能です. リストは糖鎖構造（または名前）とm/zおよび糖鎖タイプをカンマで区切るCSV形式で保存してださい.
 
-ここでは, 論文にもあった[Niemann–Pick disease type C (NPC)](https://pubs.acs.org/doi/10.1021/ac702124d)の測定データを用いて説明します. これらの測定データはtag_NP_tutorialというディレクトリに, N-glycanとFNGというフォルダにそれぞれCSVで保存されています.
+SALSAやなどにも対応したのでいかに糖鎖リストの整理をしておきます.
+|ファイル名|N/F/G| 内容|
+|:-----|:-----|:----|
+|N_list_2008_BOA.csv|N-glycan|MTT/BOAラベルNa addact|
+|N_salsa_glcA_MA_BOA2d.cav|N|SALSA/BOAラベルNa adduct/GlcAはMAラベル|
+|N_salsa_glcA_iPA_BOA2d.csv|N|SALSA/BOAラベルNa adduct/GlcAはいPAラベル|
+|N_salsa_glcA_aoWRd2.csv|N|MTT/aoWRラベル/GlcAフリー|
+|N_list_auto.csv|N|MTT/aoWRラベル|
+|F_list_auto.csv|F|MTT/aoWRラベル|
+|g219_salsa_sphingomap3.csv|G|SALSA/aoWR|
+|g219_mtt_sphingomap.csv|G|MRR/aoWR|
 
-**runTAG_Expression (absolute expression)** をクリックすると, リストの選択画面が表示されます. N-glykcanの解析を行うために **N_list_auto.csv**を選択します.
 
-<img src="image/list_select_n-glycan.png" alt="center" width="400"/>
+また実行についてはバージョン5.2と変わりませんので[readme_5.2.md](https://github.com/nmiura3/tag/blob/master/READM_5.2.md)を参照してください.
 
-**開く**をクリックすると, 引き続きCSVファイルがあるディレクトリを指定する画面にが拓きます. N-glycanのデータが入っているディレクトリを選択し **OK**をクリックすると計算が始まります.
-
-<img src="image/csv_select_n-glycan.png" alt="center" width="400"/>
-
-計算が完了すると下記の終了メッセージが表示されます.
-
-<img src="tag_expression_finish.png" alt="center" width="200"/>
-
-CSVがあったディレクトリに各種ファイルが出力されます.
-各種出力されるファイルの見方については論文を参照してください.
-できるファイルについては以下のとおり.
+出力ファイルは以下の通りです.
 
 | ファイル名 | 内容 ｜
 | :------ | :------|
@@ -99,6 +111,8 @@ CSVがあったディレクトリに各種ファイルが出力されます.
 | exp_list_zerocut.csv | exp_list.csvからさらにすべての実験について発現量がゼロの糖鎖を削除してコンパクトな表示してあります. exp_list.csvと同様に<font color="red">下の方にタイプ別の集計も掲載していますが, TAGでは可能性のある構造をすべて帰属しているのでダブルカウントしているタイプがあるため, ほんの目安にしかできません.</font>|
 | for_pathway_X.csv | TAG_viewでの処理に必要な情報をまとめています.現状ではファイル名は固定で, TAG_expを動作後に実行することを前提としています.Xには, N-glycanの場合はN, FOSの場合はF, O-glycanの場合はO, GSLの場合はGが入ります. |
 |each_glycan_quant.html|帰属した糖鎖の発現量を系列ごとの棒グラフにまとめたもの. html形式なので一般のウェブブラウザで閲覧可能 |
+|<font color="yellow">each_glycan_quant_point.html</font>|検量線を引くために散布図にまとめたもの. 直線フィッティングを行ってa,b,R^2も出力している. html形式なので一般のウェブブラウザで閲覧可能 |
+|<font color="yellow">each_glycan_quant_point_rcut.html</font>|検量線を引くために散布図にまとめたものでR^2>0.9の糖鎖のみを示した. 直線フィッティングを行ってa,b,R^2も出力している. html形式なので一般のウェブブラウザで閲覧可能 |
 |calb_ms_value_plot.html|糖鎖を帰属する際に用いるリストにある理論的m/zと実測値の理論からのずれΔm/zの散布図. 図の詳細は論文を参照ください.|
 | *.dat1, *.dat2 | 糖鎖を帰属する際に行うクラスタリングの精度をチェックするためのグラフを作成する元データ.tolerance値でピックした糖鎖についての*.dat1は理論m/zと実測のずれで*.dat2はピックした糖鎖の理論m/zと実測値からのずれが収められています. |
 | *.png | 上記データとクラスタリングデータから最小二乗法によって引いた直線をプロットしたグラフ.白抜き四角がtoleranceでピックしたデータ, 塗りつぶされた丸がクラスタリングによってピックした糖鎖のデータ. |
@@ -107,10 +121,11 @@ CSVがあったディレクトリに各種ファイルが出力されます.
 | mkgraph.plt | *.pltをまとめて描画するためのスクリプト |
 <br>
 
-SLSA法でのGSLの場合, リストは
-
 
 ## 5.TAG_Pathwayの実行
+
+糖鎖組成のIDを変更したため現在調整中です.
+以下バージョン5.2と同じになります.
 
 TAG Expressionを実行した際にできる **for_pathway_X.csv** と用意されたマップファイルから発現量（変動）を生合成経路へマップする. TAGのメニュ―画面から下4つのボタンがTAG_pathwayの実行に対応している.
 
@@ -136,10 +151,12 @@ TAG Pathwayの出力ファイルは以下の通り
 
 ## 6. その他
 
-現在のバージョンでは糖鎖リストの長さは10,000まで, 測定されるMSの実験数は48に限定されています.
+- 現在のバージョンでは糖鎖リストの長さは2,000まで, 測定されるMSの実験数は200に限定されています.
 
 
-おかしな点があれば, ご連絡いただければできる限り対応します. 作者は別に本務があるため時間がかかる場合がありますが, ご連絡いただければ, 見通しも含めできるだけ早くリプライをさせて頂きます.
+- おかしな点があれば, ご連絡いただければできる限り対応します. 作者は別に本務があるため時間がかかる場合がありますが, ご連絡いただければ, 見通しも含めできるだけ早くリプライをさせて頂きます.
+連絡先: miura.nobuaki3@gmail.com
 
-miura.nobuaki3@gmail.com
+
+- 本研究の一部はJSPS科研費 21K12124の助成を受けて進められています.
 
