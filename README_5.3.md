@@ -1,6 +1,6 @@
-# Toolbox Accelerating Glycomics (TAG) version 5.3.2 manual
-## TAG リリース v5.3.2
-2022.1.19
+# Toolbox Accelerating Glycomics (TAG) version 5.3 manual
+## TAG リリース v5.3
+2022.1.10
 
 ## 1.  変更点
 バージョン5.3では動作自賠が大幅に変更になりました. 5.2のようにCSVファイルを用意してTAGexpressionを走らせる機能も残っています. これは後述します. 以下に変更点, 新機能を記載します.
@@ -9,14 +9,12 @@
 - 検量線を引く処理(TAG express calburation line)と実際に解析する処理(TAG expression analysis)の２つに実行モードを分けた. 1つのプレートファイルから検量線用のスポットと実測用のスポットの情報を読み取り2つのインプット用のフォルダを作成しそれぞれ必要なcsvファイルを格納します.
 - 検量線を引くモードではeach_glycan_quant_point_rcut.htmlを出力し, 検量線のグラフを示す. フィットする直線の傾き, 切片およびR^2を出力します.
 - exp_list_zero_cut.csvの記述において糖鎖組成に対するglyconnetへのハイパーリンクを追加しました. csvファイルを開きリンクをクリックするとglyconnectで組成を検索できます.
-- 糖鎖IDを15桁に拡張した際に停止していたPathway機能を復活しました. MTTであればこれまで通りに動作します.
-- 現在2本差の複合型糖鎖に限定ですが, SALSAに対応したPathwayを実装しました. お試し的な要素が強いですが, 今後のためご意見いただけると幸いです.
 
 ## 2. 概要
-- windows版 tag_v5.3.2_win.zip
+- windows版 tag_v5.3_win.zip
   - MS windows10 pro 20H2にて動作確認
   - 開発は mingw上のgcc/fortranで行い静的実行ファイルを生成
-- Mac版 tag_v5.3.2_M1mac.zip
+- Mac版 tag_v5.3_M1mac.zip
   - [for_mac.md](https://github.com/nmiura3/tag/blob/master/for_mac.md)を参照してください.  いくつかアプリケーションをインストールする必要があります.
 
 
@@ -24,10 +22,6 @@ TAGについての詳細は以下の論文にあります
 
 [Toolbox Accelerating Glycomics (TAG): Glycan Annotation from MALDI-TOF MS Spectra and Mapping Expression Variation to Biosynthetic Pathways,  Biomolecules 2020, 10(10), 1383; https://doi.org/10.3390/biom10101383  ](https://www.mdpi.com/2218-273X/10/10/1383)
 TAGを用いて解析を行った場合は上記論文を参照して頂ければ幸いです.
-
-またPathwaySALSA拡張についてはDrawGlycanを用いています.
-
-[DrawGlycan-SNFG: a robust tool to render glycans and glycopeptides with fragmentation information, Glycobiology, Volume 27, Issue 3, March 2017, Pages 200–205](https://doi.org/10.1093/glycob/cww115)
 
 リリースのところからダウンロードしてください. 基本的にフォルダを解凍してできるTAGのフォルダをどこかにおいて, win版であればフォルダ内のtag.batを, mac版であればtag.commandをダブルクリックする事で起動できます.
 
@@ -52,21 +46,9 @@ TAGは, tag.bat(mac版ではtag.command)というバッチファイルをダブ�
 
 すると, tag起動画面, 小さなメニューが出現します.
 
-<img src="image/title_5.3_2.png" alt="drawing" width="200"/>
+<img src="image/title_5.3.png" alt="drawing" width="200"/>
 
 上半分はそれぞれの処理を行うためのボタンで, 下半分にはtagが置かれているフォルダやリストファイルなどの情報が出力されます. それぞれボタンを押すことによってそれぞれプログラムが実行され処理が行われます.立ち上げたばかりの時は, tagが置かれているフォルダ以外のデータフォルダやリストファイルは未選択ですので空欄になっています.処理が実行されるとこれらは表示されます.TAG_Pathwayについて, N-glycanとNFGについてはグラフを貼り付けたタイプと, 発現量の増減を示したタイプの2種類が出力されます.GSL(SALSA)の場合は現在棒グラフを貼り付けたタイプのみ動作します. 5.3にバージョンアップするにあたり糖鎖組成のIDを大幅に変更したため現在このTAG_pathwayは動作しません. 対応しだいこの場でお知らせいたします.
-
-機能としては下記の表にあるものがあります.
-| bottun| description of function |
-| :-------------------- | :----- |
-|make input file<br>from MassList and plate file|質量分析データMassList.xlsxファイルと次節で解説するプレートファイルを用いて検量線(calibration line)および実際の解析(analysis)用のデータを自動で作成します. MassListと同じディレクトリにMassListフォルダを作成しその中にプレートファイルの記述に応じてcalibration_lineとanalysisというフォルダを作成しそれぞれのTAGexpression用のインプットファイル格納します.|
-|run TAG_expression<br> (calibration line)|検量線用のTAGexpressionを実行します.|
-|run TAG_expression<br> (actual analysis)|実際の解析用のTAGexpressionを実行します. <font color="yellow"> 従来のようにインプットを作成した場合はこのボタンで実行してください.</font>|
-|TAG_Pathway<br>(N-glycan 15dig)|N-glycan用のTAG_Pathwayを実行します.15桁の糖鎖IDに対応しました. MTT修飾用です. シアル酸はアセチルのみに対応しています.|
-|TAG_pathway<br>(N-glycan 15dig SALSA)| SALSA対応したTAG Pathwayを実行します. 現在マップは2本差のみです. 中性糖鎖については上記従来のTAG_Pathwayとマップを共有しています|
-|Convert a excel MS file to multi csv| MassListをマルチcsvに変更するボタンです. これまでは同様の機能を持つフリーソフトを同梱していましたが自前で機能を実装しました.|
-|exit|TAGを終了します.
-
 
 ## 3. プレート情報ファイルの準備
 
@@ -143,7 +125,8 @@ SALSAやなどにも対応したのでいかに糖鎖リストの整理をして
 
 ## 5.TAG_Pathwayの実行
 
-バージョン5.3で導入した15桁の糖鎖IDに対応したPathwayです. 現在N-glycanのMTTとSALSAにのみ対応しています. SALSAとMTTで使い分けてください. MTTはNeu5Acにのみ対応しています. 使い方は以下の通りこれまでと変わりません. pathway用のcsvファイルを選択し, 出力先を指定するだけです.
+糖鎖組成のIDを変更したため現在調整中です.
+以下バージョン5.2と同じになります.
 
 TAG Expressionを実行した際にできる **for_pathway_X.csv** と用意されたマップファイルから発現量（変動）を生合成経路へマップする. TAGのメニュ―画面から下4つのボタンがTAG_pathwayの実行に対応している.
 
@@ -165,12 +148,12 @@ TAG Pathwayの出力ファイルは以下の通り
 |barchart_pathway.html | 生合成経路に発現量の棒グラフをマップ. これを見るとどの糖鎖がどのような変化をしているかが一覧できる. |
 |系列A - 系列B.html  (ex. wt- - NPC-.html) | 系列間の発現量増減をマッピングした生合成経路図. これによってt検定的に有意に増加した糖鎖を生合成経路上で一覧可能.|
 
-SALSA用のPathwayを実行した場合には上記ファイル名に中性糖鎖であれば<font color="yellow">Pathway2_N_neutral_</font>2本鎖であれば<font color="yellow">Pathway2_N_1a_1hy_</font>という接頭辞が付きます.
 
 
 ## 6. その他
 
-- 現在のバージョンでは糖鎖リストの長さは2,000まで, 測定されるMSの実験数は200に限定されています. 技術的な問題もありなかなｋwindowsをmacでメモリモデルの壁を破れず苦労しています. メモリモデル問題をクリアできたとしても, 8GBメモリが必要とかいうPCでは現実てきではないので, 配列の節約も含めて検討に入っています. 目標であるウェブブラウザ上での動作版に合わせて検討を進めていきます.
+- 現在のバージョンでは糖鎖リストの長さは2,000まで, 測定されるMSの実験数は200に限定されています.
+
 
 - おかしな点があれば, ご連絡いただければできる限り対応します. 作者は別に本務があるため時間がかかる場合がありますが, ご連絡いただければ, 見通しも含めできるだけ早くリプライをさせて頂きます.
 連絡先: miura.nobuaki3@gmail.com
