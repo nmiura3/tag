@@ -9,7 +9,26 @@
 - 検量線を引く処理(TAG express calburation line)と実際に解析する処理(TAG expression analysis)の２つに実行モードを分けた. 1つのプレートファイルから検量線用のスポットと実測用のスポットの情報を読み取り2つのインプット用のフォルダを作成しそれぞれ必要なcsvファイルを格納します.
 - 検量線を引くモードではeach_glycan_quant_point_rcut.htmlを出力し, 検量線のグラフを示す. フィットする直線の傾き, 切片およびR^2を出力します.
 - exp_list_zero_cut.csvの記述において糖鎖組成に対するglyconnetへのハイパーリンクを追加しました. csvファイルを開きリンクをクリックするとglyconnectで組成を検索できます.
-- 糖鎖IDを15桁に拡張した際に停止していたPathway機能を復活しました. MTTであればこれまで通りに動作します.
+- 糖鎖IDを15桁に拡張した際に停止していたPathway機能を復活しました. MTTであればこれまで通りに動作します. 15桁の各桁が意味するところは下記の通りです.
+
+||||
+|:---|:---|:----|
+|1|Hex|
+|2|HexNAc|
+|3|Fuc|
+|4|NeuAc|
+|5|NeuGc|
+|6|3-8NeuAc| alpha23 or alpha 28 NeuAc|
+|7|6NeuAc| alpha26 NeuAc|
+|8|3-8NeuGc| alpha23 or alpha 28 NeuGc|
+|9|6NeuGc| alpha26 NeuGc|
+|10|KDN|
+|11|HSO3|
+|12|lactone|
+|13|Ac|
+|14|GlcA|
+|15|P|
+
 - 現在2本差の複合型糖鎖に限定ですが, SALSAに対応したPathwayを実装しました. お試し的な要素が強いですが, 今後のためご意見いただけると幸いです.
 
 ## 2. 概要
