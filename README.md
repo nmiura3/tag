@@ -1,6 +1,6 @@
 # Toolbox Accelerating Glycomics (TAG) version 5.3.2 manual
 ## TAG リリース v5.3.2
-2022.1.19
+2022.6.10更新
 
 ## 0. TAGで読み込めるエクセルファイルは"xlsx"です. xlsのマスリストの場合は一回開いてxlsxで保存直してください.
 
