@@ -48,6 +48,7 @@
 TAGについての詳細は以下の論文にあります
 
 [Toolbox Accelerating Glycomics (TAG): Glycan Annotation from MALDI-TOF MS Spectra and Mapping Expression Variation to Biosynthetic Pathways,  Biomolecules 2020, 10(10), 1383; https://doi.org/10.3390/biom10101383  ](https://www.mdpi.com/2218-273X/10/10/1383)
+[Toolbox Accelerating Glycomics (TAG): Improving Large-Scale Serum Glycomics and Refinement to Identify SALSA-Modified and Rare Glycans,  Int. J. Mol. Sci. 2022, 23(21), 13097; https://doi.org/10.3390/ijms232113097](https://www.mdpi.com/1422-0067/23/21/13097)
 TAGを用いて解析を行った場合は上記論文を参照して頂ければ幸いです.
 
 またPathwaySALSA拡張についてはDrawGlycanを用いています.
