@@ -38,7 +38,7 @@ TAGについての詳細は以下の論文にあります
 
 TAGを用いて解析を行った場合は上記論文を参照して頂ければ幸いです.
 
-またPathwaySALSA拡張についてはDrawGlycanを用いています.
+またPathwaySALSA拡張については[DrawGlycan](http://www.virtualglycome.org/DrawGlycan/)を用いています.
 
 [DrawGlycan-SNFG: a robust tool to render glycans and glycopeptides with fragmentation information, Glycobiology, Volume 27, Issue 3, March 2017, Pages 200–205](https://doi.org/10.1093/glycob/cww115)
 
