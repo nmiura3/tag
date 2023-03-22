@@ -124,11 +124,11 @@ SALSAやなどにも対応したので以下に糖鎖リストの整理をして
 |ファイル名|N/F/G| 内容|
 |:-----|:-----|:----|
 |N_list_2008_BOA.csv|N-glycan|MTT/BOAラベルNa addact|
-|N_list_SALSA_BOA_full_221129_noGlcA.csv|SALSA BOAラベル, GlcA含まず|
-|N_list_SALSA_BOA_full_221129_noNeuGc_noGlcA_sorted_by_mass.csv|SALSA BOAラベル GlcAおよびNeuGc含まず, 質量順に並べ替え |
-|N_list_SALSA_BOA_full_221129.csv|SALSA BOAすべて含む|
-|N_list_SALSA_aowr_full_221122.csv|SALSA aoWRラベル すべて含む|
-|N_list_SALSA_aowr_full_221122_noGlcA.csv|SALSa aoWRラベル GlcA含まず｜
+|N_list_SALSA_BOA_full_221129_noGlcA.csv|N|SALSA BOAラベル, GlcA含まず|
+|N_list_SALSA_BOA_full_221129_noNeuGc_noGlcA_sorted_by_mass.csv|N|SALSA BOAラベル GlcAおよびNeuGc含まず, 質量順に並べ替え |
+|N_list_SALSA_BOA_full_221129.csv|N|SALSA BOAすべて含む|
+|N_list_SALSA_aowr_full_221122.csv|N|SALSA aoWRラベル すべて含む|
+|N_list_SALSA_aowr_full_221122_noGlcA.csv|N|SALSA aoWRラベル GlcA含まず｜
 |N_salsa_glcA_MA_BOA2d.cav|N|SALSA/BOAラベルNa adduct/GlcAはMAラベル|
 |N_salsa_glcA_iPA_BOA2d.csv|N|SALSA/BOAラベルNa adduct/GlcAはいPAラベル|
 |N_salsa_glcA_aoWRd2.csv|N|MTT/aoWRラベル/GlcAフリー|
